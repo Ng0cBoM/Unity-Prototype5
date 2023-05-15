@@ -37,12 +37,21 @@ public class Target : MonoBehaviour
         return new Vector3(Random.Range(-xRange, xRange), ySpawnPos);
     }
 
-    private void OnMouseDown()
+    /*private void OnMouseDown()
+    {
+        if (GameManager.instance.isGameActive && !GameManager.instance.isGamePaused)
+        {
+            Destroy(gameObject);
+            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            GameManager.instance.UpdateScore(pointValue);
+        }
+    }*/
+    public void DestroyTarget()
     {
         if (GameManager.instance.isGameActive)
         {
             Destroy(gameObject);
-            Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
+            Instantiate(explosionParticle, transform.position,explosionParticle.transform.rotation);
             GameManager.instance.UpdateScore(pointValue);
         }
     }
@@ -51,12 +60,15 @@ public class Target : MonoBehaviour
         Destroy(gameObject);
         if (!gameObject.CompareTag("Bad"))
         {
-            GameManager.instance.UpdateLives(1);
-        }
-        if (GameManager.instance.lives == 0)
-        {
-            GameManager.instance.GameOver();
-        }
-
+            if (GameManager.instance.isGameActive)
+            {
+                GameManager.instance.UpdateLives(1);
+            }
+            if (GameManager.instance.lives == 0)
+            {
+                GameManager.instance.GameOver();
+            }
+        }    
     }
+    
 }
