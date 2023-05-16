@@ -37,7 +37,7 @@ public class Target : MonoBehaviour
         return new Vector3(Random.Range(-xRange, xRange), ySpawnPos);
     }
 
-    /*private void OnMouseDown()
+    private void OnMouseDown()
     {
         if (GameManager.instance.isGameActive && !GameManager.instance.isGamePaused)
         {
@@ -45,17 +45,8 @@ public class Target : MonoBehaviour
             Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
             GameManager.instance.UpdateScore(pointValue);
         }
-    }*/
-    public void DestroyTarget()
-    {
-        if (GameManager.instance.isGameActive)
-        {
-            Destroy(gameObject);
-            Instantiate(explosionParticle, transform.position,explosionParticle.transform.rotation);
-            GameManager.instance.UpdateScore(pointValue);
-        }
     }
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
         if (!gameObject.CompareTag("Bad"))
@@ -69,6 +60,6 @@ public class Target : MonoBehaviour
                 GameManager.instance.GameOver();
             }
         }    
-    }
+    }*/
     
 }

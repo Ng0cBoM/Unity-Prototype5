@@ -9,48 +9,36 @@ public class GameManager : MonoBehaviour
 {
     public List<GameObject> targets;
     public static GameManager instance;
-    public GameObject titleScreen;
-    public GameObject inforScreen;
-    public GameObject gameoverScreen;
-    public GameObject pauseScreen;
-
+    public GameObject crosshair;
 
     private float spawnRate = 1.0f;
     private int score;
-    public int lives;
     public bool isGameActive;
     public bool isGamePaused;
 
-    public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI livesText;
-    public Button restartButton;
-    
     void Start()
     {
-        inforScreen.gameObject.SetActive(false);
-        gameoverScreen.gameObject.SetActive(false);
-        pauseScreen.gameObject.SetActive(false);
-        titleScreen.gameObject.SetActive(true);
+        UIManager.instance.UIStartGame();
+        crosshair.SetActive(false);
     }
 
     public void StartGame(int difficulty)
     {
         isGameActive = true;
         isGamePaused = false;
-        lives = 3;
         score = 0;
         spawnRate /= difficulty;
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
-        UpdateLives(0);
-        titleScreen.gameObject.SetActive(false);
-        inforScreen.gameObject.SetActive(true);
+        UIManager.instance.UIInGame();
+        crosshair.SetActive(true);
     }
     
     public void GameOver()
     {
-        gameoverScreen.gameObject.SetActive(true);
+        UIManager.instance.UIGameOver();
         isGameActive = false;
+        crosshair.SetActive(false);
     }
     public void RestartGame()
     {
@@ -68,14 +56,7 @@ public class GameManager : MonoBehaviour
     public void UpdateScore(int scoreToAdd)
     {
         score += scoreToAdd;
-        scoreText.text = "Score: "+ score;
-    }
-
-    public void UpdateLives(int liveUpdate)
-    {
-        lives -= liveUpdate;
-        livesText.text = "Lives: " + lives;
-       
+        UIManager.instance.UISetScoreText(score);
     }
 
     public void PauseAndResumGame()
@@ -84,16 +65,16 @@ public class GameManager : MonoBehaviour
         if (isGamePaused)
         {
             Time.timeScale = 1;
-            pauseScreen.gameObject.SetActive(false);
-            inforScreen.gameObject.SetActive(true);
+            UIManager.instance.UIGameResume();
             isGamePaused = false;
+            crosshair.SetActive(true);
         }
         else
         {
-            pauseScreen.gameObject.SetActive(true);
-            inforScreen.gameObject.SetActive(false);
+            UIManager.instance.UIGamePause();
             isGamePaused = true;
-            Time.timeScale = 0;            
+            Time.timeScale = 0;
+            crosshair.SetActive(false);
         }
     }
     private void Update()
@@ -115,6 +96,4 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
-
 }
