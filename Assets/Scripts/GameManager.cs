@@ -11,10 +11,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameObject crosshair;
 
-    private float spawnRate = 1.0f;
-    private int score;
     public bool isGameActive;
     public bool isGamePaused;
+
+    private float spawnRate = 1.0f;
+    private int score;
+    public int bulletsLeft;
 
     void Start()
     {
@@ -30,6 +32,8 @@ public class GameManager : MonoBehaviour
         spawnRate /= difficulty;
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
+        BulletReload();
+
         UIManager.instance.UIInGame();
         crosshair.SetActive(true);
     }
@@ -57,6 +61,17 @@ public class GameManager : MonoBehaviour
     {
         score += scoreToAdd;
         UIManager.instance.UISetScoreText(score);
+    }
+
+    public void UpdateBullet()
+    {
+        bulletsLeft -= 1;
+        UIManager.instance.UISetBulletText(bulletsLeft);
+    }
+    public void BulletReload()
+    {
+        bulletsLeft = 6;
+        UIManager.instance.UISetBulletText(bulletsLeft);
     }
 
     public void PauseAndResumGame()

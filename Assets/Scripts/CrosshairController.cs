@@ -8,10 +8,12 @@ public class CrosshairController : MonoBehaviour
     private new Camera camera;
     private Vector3 mousePos;
     public GameObject bulletHole;
-    public GameObject background;
+    public GameObject bulletLoading;
+    public bool isLoading;
     void Start()
     {
         camera = Camera.main;
+        isLoading = false;
     }
     void UpdateMousePosition()
     {
@@ -22,13 +24,32 @@ public class CrosshairController : MonoBehaviour
     {
         if (GameManager.instance.isGameActive && !GameManager.instance.isGamePaused)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (GameManager.instance.bulletsLeft > 0)
             {
-                Vector3 holePos = new Vector3(transform.position.x, transform.position.y, 2);
-                Instantiate(bulletHole, holePos, bulletHole.transform.rotation);
+                isLoading = false;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Vector3 holePos = new Vector3(transform.position.x, transform.position.y, 2);
+                    Instantiate(bulletHole, holePos, bulletHole.transform.rotation);
+                    GameManager.instance.UpdateBullet();
+                }
+            }            
+            else if (GameManager.instance.bulletsLeft == 0  && isLoading == false)
+            {
+                bulletLoading.SetActive(true);
+                StartCoroutine(Loading());
             }
             UpdateMousePosition();
         }
+    }
+    IEnumerator Loading()
+    {
+        isLoading = true;
+        yield return new WaitForSeconds(2);
+        GameManager.instance.BulletReload();
+        bulletLoading.SetActive(false);
+        Debug.Log("loading");
+
     }
 
 

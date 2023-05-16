@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject pauseScreen;
 
     public TextMeshProUGUI scoreText;
-    public TextMeshProUGUI livesText;
+    public TextMeshProUGUI bulletText;
     public Button restartButton;
 
     private void Awake()
@@ -62,5 +62,10 @@ public class UIManager : MonoBehaviour
     public void UISetScoreText(int score) 
     {
         scoreText.text = "Score: " + score;
+    }
+
+    public void UISetBulletText(int bulletsLeft)
+    {
+        bulletText.text = "Bullet: " + bulletsLeft;
     }
 }
