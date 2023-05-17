@@ -13,10 +13,15 @@ public class GameManager : MonoBehaviour
 
     public bool isGameActive;
     public bool isGamePaused;
+    public bool isBonus;
 
     private float spawnRate = 1.0f;
     private int score;
+    public float timeLeft;
     public int bulletsLeft;
+
+    public bool isPowerUp;
+    public int onTargetCount;
 
     void Start()
     {
@@ -28,13 +33,18 @@ public class GameManager : MonoBehaviour
     {
         isGameActive = true;
         isGamePaused = false;
+        isBonus = false;
+        isPowerUp = false;
         score = 0;
+        timeLeft = 40;
+        onTargetCount = 0;
         spawnRate /= difficulty;
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
         BulletReload();
 
         UIManager.instance.UIInGame();
+        UIManager.instance.SetFillBulletAmount(6);
         crosshair.SetActive(true);
     }
     
@@ -66,12 +76,14 @@ public class GameManager : MonoBehaviour
     public void UpdateBullet()
     {
         bulletsLeft -= 1;
+        UIManager.instance.SetFillBulletAmount(bulletsLeft);
         UIManager.instance.UISetBulletText(bulletsLeft);
     }
     public void BulletReload()
     {
         bulletsLeft = 6;
         UIManager.instance.UISetBulletText(bulletsLeft);
+        UIManager.instance.SetFillBulletAmount(bulletsLeft);
     }
 
     public void PauseAndResumGame()
@@ -93,11 +105,48 @@ public class GameManager : MonoBehaviour
         }
     }
     private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && isGameActive)
+    { 
+        
+        if (isGameActive)
         {
-            PauseAndResumGame();
+            timeLeft -= Time.deltaTime;
+            UIManager.instance.UISetTimeText(Mathf.Round(timeLeft));
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                PauseAndResumGame();
+            }
+            if (timeLeft <= 0) GameOver();
+        } 
+    }
+
+    public void StartBonus()
+    {
+        UIManager.instance.UISetBulletBonus();
+        isBonus = true;
+        timeLeft += 5;
+        UIManager.instance.bonusSlider.gameObject.SetActive(true);
+        StartCoroutine(TimeBonus());
+        
+    }
+
+    public void EndBonus()
+    {
+        isBonus = false;
+        BulletReload();
+        UIManager.instance.UISetBulletText(bulletsLeft);
+        UIManager.instance.bonusSlider.gameObject.SetActive(false);
+    }
+    IEnumerator TimeBonus()
+    {
+        float timeBonusLeft = 3f;
+
+        while (timeBonusLeft >= 0)
+        {
+            timeBonusLeft -= Time.deltaTime;
+            UIManager.instance.UISetBonusSlider(timeBonusLeft);
+            yield return null;
         }
+        EndBonus();
     }
 
     private void Awake()

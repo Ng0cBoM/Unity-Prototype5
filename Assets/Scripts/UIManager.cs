@@ -1,3 +1,4 @@
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -15,7 +16,11 @@ public class UIManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bulletText;
+    public TextMeshProUGUI timeText;
     public Button restartButton;
+    public Slider bonusSlider;
+
+    public Image bulletAmountFill;
 
     private void Awake()
     {
@@ -35,6 +40,7 @@ public class UIManager : MonoBehaviour
         gameoverScreen.gameObject.SetActive(false);
         pauseScreen.gameObject.SetActive(false);
         titleScreen.gameObject.SetActive(true);
+        bonusSlider.gameObject.SetActive(false);
     }
 
     public void UIInGame()
@@ -66,6 +72,42 @@ public class UIManager : MonoBehaviour
 
     public void UISetBulletText(int bulletsLeft)
     {
-        bulletText.text = "Bullet: " + bulletsLeft;
+        bulletText.text = ""+bulletsLeft;
+    }
+    public void UISetBulletBonus()
+    {
+        bulletText.text = "∞";
+    }
+
+    public void UISetBonusSlider(float value)
+    {
+        bonusSlider.value = value;
+    }
+
+    public void UISetTimeText(float time)
+    {
+        timeText.text = "Time: "+time;
+    }
+
+    public void UIBlinkingTimeTex()
+    {
+        StartCoroutine(BlinkText());
+    }
+    IEnumerator BlinkText()
+    {
+        while (GameManager.instance.isPowerUp)
+        {
+            timeText.color = Color.yellow;
+            yield return new WaitForSeconds(0.1f);
+
+            timeText.color = Color.green;
+            yield return new WaitForSeconds(0.1f);
+        }
+        timeText.color = Color.white;
+    }
+
+    public void SetFillBulletAmount(int bulletsLeft)
+    {
+        bulletAmountFill.fillAmount = ((float)bulletsLeft / 6f);
     }
 }
