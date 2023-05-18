@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     public Slider bonusSlider;
 
     public Image bulletAmountFill;
+    public Image crosshairAmountFill;
+    public Image crosshairBackground;
 
     private void Awake()
     {
@@ -119,5 +121,23 @@ public class UIManager : MonoBehaviour
     public void SetFillBulletAmount(int bulletsLeft)
     {
         bulletAmountFill.fillAmount = ((float)bulletsLeft / 6f);
+    }
+
+    public void SetFillCrosshairAmount(float amount)
+    {
+        crosshairAmountFill.fillAmount = amount;
+    }
+
+    public void SetAnimationShooting()
+    {
+        crosshairAmountFill.rectTransform.localScale *= 1.5f;
+        crosshairBackground.rectTransform.localScale *= 1.5f;
+        StartCoroutine(ReturnSize());
+    }
+    IEnumerator ReturnSize()
+    {
+        yield return new WaitForSeconds(0.1f);
+        crosshairAmountFill.rectTransform.localScale /= 1.5f;
+        crosshairBackground.rectTransform.localScale /= 1.5f;
     }
 }

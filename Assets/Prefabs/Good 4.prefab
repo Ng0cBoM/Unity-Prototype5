@@ -128,4 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionParticle: {fileID: 7940618794353588873, guid: c922c6ab9c80b9b49ad624c6b1f85d5f, type: 3}
-  pointValue: 3
+  boomParticle: {fileID: 0}
+  scoreEffect: {fileID: 4194732335542985437, guid: 49822bedcf2731548a2f431e64d601f6, type: 3}
+  scoreEffectText: {fileID: 0}
+  pointValue: 4

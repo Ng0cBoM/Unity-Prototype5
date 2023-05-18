@@ -8,22 +8,26 @@ public class CrosshairController : MonoBehaviour
     private new Camera camera;
     private Vector3 mousePos;
     public GameObject bulletHole;
-    public GameObject bulletLoading;
+    public ParticleSystem shootParticleSystem;
+
     private bool isLoading;
     private int currentOnTargetCount;
+    float timeLoadingLeft = 2f;
 
-    
+
     void Start()
     {
         camera = Camera.main;
         isLoading = false;
         currentOnTargetCount = 0;
     }
+
     void UpdateMousePosition()
     {
         mousePos = camera.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 5));
         transform.position = mousePos;
     }
+
     void Update()
     {
         if (GameManager.instance.isGameActive && !GameManager.instance.isGamePaused)
@@ -35,6 +39,8 @@ public class CrosshairController : MonoBehaviour
                 {
                     Vector3 holePos = new Vector3(transform.position.x, transform.position.y, 2);
                     Instantiate(bulletHole, holePos, bulletHole.transform.rotation);
+                    UIManager.instance.SetAnimationShooting();
+                    Instantiate(shootParticleSystem, transform.position, shootParticleSystem.transform.rotation);
                     if (!GameManager.instance.isBonus) GameManager.instance.UpdateBullet();
                     currentOnTargetCount++;
                     
@@ -53,21 +59,23 @@ public class CrosshairController : MonoBehaviour
             }            
             else if (GameManager.instance.bulletsLeft == 0  && isLoading == false)
             {
-                bulletLoading.SetActive(true);
-                StartCoroutine(Loading());
+                UIManager.instance.SetFillCrosshairAmount(0);
+                Loading();
             }
             UpdateMousePosition();
         }
     }
-    IEnumerator Loading()
+
+    void Loading()
     {
-        isLoading = true;
-        yield return new WaitForSeconds(2);
-        GameManager.instance.BulletReload();
-        bulletLoading.SetActive(false);
+        timeLoadingLeft -= Time.deltaTime;
+        UIManager.instance.SetFillCrosshairAmount((2f - timeLoadingLeft) / 2f);
+        Debug.Log(timeLoadingLeft);
+        if (timeLoadingLeft <= 0)
+        {
+            GameManager.instance.BulletReload();
+            isLoading = true;
+            timeLoadingLeft = 2f;
+        }
     }
-
-
-
-
 }

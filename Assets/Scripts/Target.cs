@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class Target : MonoBehaviour
 {
@@ -9,12 +10,15 @@ public class Target : MonoBehaviour
     private BoxCollider targetCollide;
     public ParticleSystem explosionParticle;
     public ParticleSystem boomParticle;
+    public GameObject scoreEffect;
 
     private float minSpeed = 12;
     private float maxSpeed = 18;
     private float maxTorque = 10;
     private float xRange = 6;
     private float ySpawnPos = -6;
+
+    public TextMeshProUGUI scoreEffectText;
 
     public int pointValue;
 
@@ -25,6 +29,7 @@ public class Target : MonoBehaviour
         targetRb.AddForce(RandomForce(), ForceMode.Impulse);
         targetRb.AddTorque(RandomTorque(),RandomTorque(),RandomTorque(), ForceMode.Impulse);
         transform.position = RandomSpawnPos();
+        scoreEffectText = scoreEffect.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     Vector3 RandomForce()
@@ -61,20 +66,24 @@ public class Target : MonoBehaviour
         {
             if (gameObject.CompareTag("Bad"))
             {
+                scoreEffectText.text = "BOOM!!!!";
                 Instantiate(boomParticle, transform.position, boomParticle.transform.rotation);
                 GameManager.instance.GameOver();   
             }
             else if (gameObject.CompareTag("Bonus"))
             {
+                scoreEffectText.text = ""+pointValue;
                 Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
                 GameManager.instance.UpdateScore(pointValue);
                 GameManager.instance.StartBonus();
             }
             else
             {
+                scoreEffectText.text = pointValue+"";
                 Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
                 GameManager.instance.UpdateScore(pointValue);
             }
+            Instantiate(scoreEffect, transform.position, scoreEffect.transform.rotation);
             Destroy(gameObject);
             GameManager.instance.onTargetCount++;
             if (GameManager.instance.isPowerUp)
