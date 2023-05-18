@@ -12,7 +12,7 @@ public class ScoreEffectController : MonoBehaviour
 
     private void Start()
     {
-        textMesh = GetComponent<TextMeshProUGUI>();
+        textMesh = gameObject.GetComponentInChildren<TextMeshProUGUI>();
         StartCoroutine(FadeOut());
     }
 

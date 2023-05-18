@@ -70,7 +70,6 @@ public class CrosshairController : MonoBehaviour
     {
         timeLoadingLeft -= Time.deltaTime;
         UIManager.instance.SetFillCrosshairAmount((2f - timeLoadingLeft) / 2f);
-        Debug.Log(timeLoadingLeft);
         if (timeLoadingLeft <= 0)
         {
             GameManager.instance.BulletReload();

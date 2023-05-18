@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6612597189778661172}
   - component: {fileID: 4061634587106689887}
   - component: {fileID: 5550021661015780512}
+  - component: {fileID: -2703652738660872959}
   m_Layer: 5
   m_Name: Score Effect
   m_TagString: Untagged
@@ -101,6 +102,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &-2703652738660872959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4194732335542985437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c78400fa63c0c740b2d2010d23aa630, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8539870916660688750
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +125,6 @@ GameObject:
   - component: {fileID: 6863508069080975325}
   - component: {fileID: 1858605332437079907}
   - component: {fileID: 446192501178378499}
-  - component: {fileID: 9158588789710185333}
   m_Layer: 5
   m_Name: Score Text Good
   m_TagString: Untagged
@@ -237,15 +249,3 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &9158588789710185333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8539870916660688750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c78400fa63c0c740b2d2010d23aa630, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
