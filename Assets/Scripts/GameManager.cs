@@ -19,13 +19,17 @@ public class GameManager : MonoBehaviour
     private int score;
     public float timeLeft;
     public int bulletsLeft;
+    public int highScore;
 
     public bool isPowerUp;
     public int onTargetCount;
 
+
+
     void Start()
     {
-        UIManager.instance.UIStartGame();
+        highScore = HighScoreManager.instance.ReadHighScore();
+        UIManager.instance.UIStartGame(highScore);
         crosshair.SetActive(false);
     }
 
@@ -42,7 +46,6 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SpawnTarget());
         UpdateScore(0);
         BulletReload();
-
         UIManager.instance.UIInGame();
         UIManager.instance.SetFillBulletAmount(6);
         crosshair.SetActive(true);
@@ -50,6 +53,7 @@ public class GameManager : MonoBehaviour
     
     public void GameOver()
     {
+        UpdateHighScore();
         UIManager.instance.UIGameOver();
         isGameActive = false;
         crosshair.SetActive(false);
@@ -71,6 +75,13 @@ public class GameManager : MonoBehaviour
     {
         score += scoreToAdd;
         UIManager.instance.UISetScoreText(score);
+    }
+
+    public void UpdateHighScore()
+    {
+        HighScoreManager.instance.UpdateHighScore(score, highScore);
+        highScore = HighScoreManager.instance.ReadHighScore();
+        UIManager.instance.UISetHighScoreText(highScore);
     }
 
     public void UpdateBullet()

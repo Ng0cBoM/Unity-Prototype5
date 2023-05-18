@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI bulletText;
     public TextMeshProUGUI timeText;
+    public TextMeshProUGUI highScoreText;
     public Button restartButton;
     public Slider bonusSlider;
 
@@ -34,24 +35,29 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UIStartGame()
+    public void UIStartGame(int highScore)
     {
         inforScreen.gameObject.SetActive(false);
         gameoverScreen.gameObject.SetActive(false);
         pauseScreen.gameObject.SetActive(false);
         titleScreen.gameObject.SetActive(true);
+        UISetHighScoreText(highScore);
+        highScoreText.gameObject.SetActive(true);
         bonusSlider.gameObject.SetActive(false);
     }
 
     public void UIInGame()
     {
         titleScreen.gameObject.SetActive(false);
+        highScoreText.gameObject.SetActive(false);
         inforScreen.gameObject.SetActive(true);
     }
 
     public void UIGameOver() 
     {
+        inforScreen.gameObject.SetActive(false);
         gameoverScreen.gameObject.SetActive(true);
+        highScoreText.gameObject.SetActive(true);
     }
 
     public void UIGamePause()
@@ -87,6 +93,10 @@ public class UIManager : MonoBehaviour
     public void UISetTimeText(float time)
     {
         timeText.text = "Time: "+time;
+    }
+    public void UISetHighScoreText(int highScore)
+    {
+        highScoreText.text = "HIGH SCORE: " + highScore;
     }
 
     public void UIBlinkingTimeTex()
