@@ -72,14 +72,14 @@ public class Target : MonoBehaviour
             }
             else if (gameObject.CompareTag("Bonus"))
             {
-                scoreEffectText.text = ""+pointValue;
+                scoreEffectText.text = "+"+pointValue;
                 Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
                 GameManager.instance.UpdateScore(pointValue);
                 GameManager.instance.StartBonus();
             }
             else
             {
-                scoreEffectText.text = pointValue+"";
+                scoreEffectText.text = "+"+pointValue;
                 Instantiate(explosionParticle, transform.position, explosionParticle.transform.rotation);
                 GameManager.instance.UpdateScore(pointValue);
             }

@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
         UIManager.instance.UIInGame();
         UIManager.instance.SetFillBulletAmount(6);
         crosshair.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = false;
     }
     
     public void GameOver()
@@ -57,6 +59,8 @@ public class GameManager : MonoBehaviour
         UIManager.instance.UIGameOver();
         isGameActive = false;
         crosshair.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
     public void RestartGame()
     {
@@ -106,6 +110,8 @@ public class GameManager : MonoBehaviour
             UIManager.instance.UIGameResume();
             isGamePaused = false;
             crosshair.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
         }
         else
         {

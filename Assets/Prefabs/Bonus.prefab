@@ -95,8 +95,8 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7149718607322729030}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
+  m_IsTrigger: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.19234496, y: 0.4928414, z: 0.190015}
   m_Center: {x: 0, y: 0, z: 0}
@@ -131,6 +131,7 @@ MonoBehaviour:
   explosionParticle: {fileID: 7940618794353588873, guid: c922c6ab9c80b9b49ad624c6b1f85d5f, type: 3}
   boomParticle: {fileID: 0}
   scoreEffect: {fileID: 4194732335542985437, guid: 49822bedcf2731548a2f431e64d601f6, type: 3}
+  scoreEffectText: {fileID: 0}
   pointValue: 5
 --- !u!1001 &1252828704685222635
 PrefabInstance:
